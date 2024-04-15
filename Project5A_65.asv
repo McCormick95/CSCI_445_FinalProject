@@ -1,0 +1,55 @@
+function [g] = Project5A_65(f)
+    %Project5A_65: 
+    %
+    %   INPUT:  f: image
+    %
+    %   OUTPUT: BW: logical image
+    %
+
+    addpath("./reference_files");
+    k = 500;
+    n = 5000;
+
+    
+    % g2 – create the superpixel image of f with n desired superpixels.
+    g2 = im2double(f);
+
+    nG = 15;
+    sig = 5;
+    filtG = fspecial('gaussian', nG, sig);
+    g2 = imgaussfilt(g2,filtG, "replicate");
+    
+    [L2, NL2] = superpixels(g2, n);
+    
+    sp2 = zeros(size(g2),'like',g2);
+    
+    idx2 = label2idx(L2);
+    
+    for labelVal = 1:NL2
+        grayIdx = idx2{labelVal};
+        sp2(grayIdx) = mean(g2(grayIdx));
+    end
+
+    g2 = mat2gray(sp2);
+
+    [idx3, C3] = kmeans(g2(:), k);
+    
+    g2 = reshape(C3(idx3, :), size(f));
+    g = mat2gray(g2);
+
+    g1 = im2double(g);
+
+    [idx1, C1] = kmeans(g1(:), k);
+    
+    g = reshape(C1(idx1, :), size(f));
+
+    % OTSU's METHOD:
+    % f = medfilt2(g);
+    
+    % [T1, ] = graythresh(f);
+ 
+    % %convert the image to binary
+    % g = imcomplement(imbinarize(f, T1));
+    
+    
+end

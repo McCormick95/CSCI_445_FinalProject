@@ -1,4 +1,7 @@
 function [] = project5_tester()
+
+    addpath('./images');
+
     f1=imread('image01.png');
     f2=imread('image02.png');
     f3=imread('image03.png');
@@ -43,10 +46,10 @@ function [] = project5_tester()
     G20= imread('label20.png');
 
 
-    [BW1,ratio1,count1] = Project5A_65(f1);
+    [BW1] = Project5A_65(f1);
 
 
-    [ACC_1, F1_1] = Project5B_65(G1,BW1);
+    %[ACC_1, F1_1] = Project5B_65(G1,BW1);
     
 
     imshow(BW1);
