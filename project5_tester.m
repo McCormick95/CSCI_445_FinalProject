@@ -46,7 +46,7 @@ function [] = project5_tester()
     G20= imread('label20.png');
 
 
-    [BW1] = Project5A_65(f1);
+    [BW1] = Project5A_65(f2);
 
 
     %[ACC_1, F1_1] = Project5B_65(G1,BW1);
