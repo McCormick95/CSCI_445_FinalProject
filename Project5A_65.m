@@ -8,11 +8,11 @@ function [g] = Project5A_65(f)
 
     addpath("./reference_files");
     sigma = .5;
-    bestSense = 0.6;
+    bestSense = 0.7;
     diskLength = 1;
     lineLength = 1;
-    lengthH = 1;
-    lengthV = 1;
+    lengthH = 4;
+    lengthV = 10;
 
 
 
