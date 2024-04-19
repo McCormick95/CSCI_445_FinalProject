@@ -74,7 +74,7 @@ function [bestSigma, bestSensitivity, bestLenDisk, bestLenLine, bestLenH, bestLe
                         % end
 
                         % Compute metrics
-                        [accuracy, F1] = Project5B_65(BW, groundTruth{i});
+                        [accuracy, F1] = Project5B_65(groundTruth{i}, BW);
 
                         % Update totals
                         totalAccuracy = totalAccuracy + accuracy;
