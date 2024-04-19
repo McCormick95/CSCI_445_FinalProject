@@ -1,33 +1,14 @@
-function [g] = Project5A_65(f)
-    %Project5A_65: 
-    %
-    %   INPUT:  f: image
-    %
-    %   OUTPUT: BW: logical image
-    %
-
+function [g] = function_optimizer(f, sigma, sensitivity, lenDisk, lenLine, lenH, lenV)
     addpath("./reference_files");
-    sigma = .5;
-    bestSense = 0.6;
-    diskLength = 1;
-    lineLength = 1;
-    lengthH = 1;
-    lengthV = 1;
-
-
 
     eqImg = adapthisteq(f);
 
     dblImg = im2double(eqImg);
 
     filtImg = imgaussfilt(dblImg, sigma);
-
-    [T1, ] = graythresh(filtImg);
- 
-    binImg = imcomplement(imbinarize(filtImg, 'adaptive', 'Sensitivity', bestSense));
-
+    binImg = imcomplement(imbinarize(filtImg, 'adaptive', 'Sensitivity', sensitivity));
     
-    s= strel("disk", diskLength, 0);
+    s = strel("disk", lenDisk, 0);
     fer = imerode(binImg, s);
     imgRe = imreconstruct(fer, binImg);
     imgReComp = imcomplement(imgRe);
@@ -36,24 +17,21 @@ function [g] = Project5A_65(f)
 
     g = reConImg;
 
-    sD = strel('line', lineLength, -45);
-    sV = strel('line', lineLength, 90);
-    sH = strel('line', lineLength, 0);
+    sD = strel('line', lenLine, -45);
+    sV = strel('line', lenLine, 90);
+    sH = strel('line', lenLine, 0);
     dImgD = imdilate(reConImg, sD);
     dImgV = imdilate(dImgD, sV);
     dImgH = imdilate(dImgV, sH);
 
     g = dImgH;
 
-    seH = strel('line', lengthH, 0);
-    seV = strel('line', lengthV, 90);
+    seH = strel('line', lenH, 0);
+    seV = strel('line', lenV, 90);
     closedH = imclose(dImgH,seH);
     closedV = imclose(closedH,seV);
 
     g = closedV;
-
-    % g = imfill(closedV, 'holes');
-
     g = imclearborder(g);
 
     [labeledImage, numRegions] = bwlabel(g);
@@ -81,4 +59,5 @@ function [g] = Project5A_65(f)
 
     g = imfill(g, 'holes');
 
+    g = im2double(g); 
 end

@@ -8,7 +8,7 @@ function [ACC, F1] = Project5B_65(G, BW)
     %
     %   OUTPUT: ACC: accuracy
     %           F1: F-score
-
+    
     % Convert to double and binarize
     G = im2double(G);
     gold = imbinarize(G);
@@ -27,6 +27,11 @@ function [ACC, F1] = Project5B_65(G, BW)
 
     % Calculates the accuracy (ACC) and F-score (F1)
     ACC = (truePos + trueNeg) / (truePos + trueNeg + falsePos + falseNeg);
-    F1 = (2*truePos) / (2*truePos + falsePos + falseNeg);
-    
+
+    den = (2*truePos + falsePos + falseNeg);
+    if(den == 0)
+        F1 = 0;
+    else
+        F1 = (2*truePos) / den;
+    end
 end
