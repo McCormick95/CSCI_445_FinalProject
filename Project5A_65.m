@@ -1,5 +1,6 @@
 function [g] = Project5A_65(f)
-    %Project5A_65: 
+    %Project5A_65: takes an image, processes that image to isolate the
+    %              lungs in an x-ray image. 
     %
     %   INPUT:  f: image
     %
